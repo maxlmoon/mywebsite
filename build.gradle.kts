@@ -26,8 +26,6 @@ repositories {
 }
 
 dependencies {
-	implementation ("org.springdoc:springdoc-openapi-ui:1.5.9")
-
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
@@ -41,9 +39,6 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
-
-	implementation("org.webjars:webjars-locator-core:0.46")
-	implementation("io.github.classgraph:classgraph:4.8.90")
 }
 
 tasks.withType<KotlinCompile> {
