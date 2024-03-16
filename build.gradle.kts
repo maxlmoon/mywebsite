@@ -41,9 +41,39 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	// testImplementation("org.springframework.security:spring-security-test")
-
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-mysql")
 	implementation("org.webjars:webjars-locator-core:0.46")
 	implementation("io.github.classgraph:classgraph:4.8.90")
+
+	implementation("jakarta.annotation:jakarta.annotation-api")
+	implementation("jakarta.persistence:jakarta.persistence-api")
+	implementation("jakarta.transaction:jakarta.transaction-api")
+
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-validation")
+
+
+	implementation("jakarta.annotation:jakarta.annotation-api")
+	implementation("jakarta.persistence:jakarta.persistence-api")
+	implementation("jakarta.transaction:jakarta.transaction-api")
+
+	implementation("org.flywaydb:flyway-core")
+	implementation("org.flywaydb:flyway-mysql")
+
+	implementation("com.fasterxml.jackson.core:jackson-core:2.16.0")
+
+	runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+
+	implementation("org.modelmapper:modelmapper:3.2.0")
+
+
+	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
 tasks.withType<KotlinCompile> {
