@@ -7,9 +7,11 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "blog_posts")
 data class BlogPost(
+
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long = 0,
+    @GeneratedValue(strategy = GenerationType.UUID)
+    val id: String,
 
     @Column(nullable = false)
     var title: String,

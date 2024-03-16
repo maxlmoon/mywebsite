@@ -12,9 +12,9 @@ class BlogPostService(private val blogPostRepository: BlogPostRepository) {
 
     fun savePost(post: BlogPost): BlogPost = blogPostRepository.save(post)
 
-    fun findPostById(id: Long): BlogPost? = blogPostRepository.findById(id).orElse(null)
+    fun findPostById(id: String): BlogPost? = blogPostRepository.findById(id).orElse(null)
 
-    fun deletePostById(id: Long) = blogPostRepository.deleteById(id)
+    fun deletePostById(id: String) = blogPostRepository.deleteById(id)
 
     fun convertToEntity(dto: BlogPostDto): BlogPost {
         return BlogPost(
@@ -22,7 +22,7 @@ class BlogPostService(private val blogPostRepository: BlogPostRepository) {
             content = dto.content,
             author = dto.author,
             // Only set ID and createdAt if non-null, otherwise let the database handle it
-            id = dto.id ?: 0,
+            id = dto.id,
             createdAt = dto.createdAt
         )
     }

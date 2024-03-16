@@ -22,19 +22,19 @@ class BlogPostController(private val blogPostService: BlogPostService) {
     }
 
     @GetMapping("/{id}")
-    fun getPostById(@PathVariable id: Long): ResponseEntity<BlogPostDto> =
+    fun getPostById(@PathVariable id: String): ResponseEntity<BlogPostDto> =
         blogPostService.findPostById(id)?.let { ResponseEntity.ok(DtoConverter.convertToDto(it)) }
             ?: ResponseEntity.notFound().build()
 
     @PutMapping("/{id}")
-    fun updatePost(@PathVariable id: Long, @RequestBody dto: BlogPostDto): ResponseEntity<BlogPostDto> =
+    fun updatePost(@PathVariable id: String, @RequestBody dto: BlogPostDto): ResponseEntity<BlogPostDto> =
         blogPostService.findPostById(id)?.let {
             val updatedPost = blogPostService.savePost(DtoConverter.convertToEntity(dto.copy(id = id)))
             ResponseEntity.ok(DtoConverter.convertToDto(updatedPost))
         } ?: ResponseEntity.notFound().build()
 
     @DeleteMapping("/{id}")
-    fun deletePostById(@PathVariable id: Long): ResponseEntity<Void> {
+    fun deletePostById(@PathVariable id: String): ResponseEntity<Void> {
         blogPostService.deletePostById(id)
         return ResponseEntity.ok().build()
     }

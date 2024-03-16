@@ -7,7 +7,7 @@ object DtoConverter {
 
     fun convertToEntity(dto: BlogPostDto): BlogPost {
         return BlogPost(
-            id = dto.id ?: 0,
+            id = dto.id,
             title = dto.title,
             content = dto.content,
             author = dto.author,
