@@ -5,6 +5,8 @@ import com.max.website.service.BlogPostService
 import com.max.website.dto.DtoConverter
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.time.LocalDateTime
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/blogposts")
@@ -16,7 +18,9 @@ class BlogPostController(private val blogPostService: BlogPostService) {
 
     @PostMapping
     fun createPost(@RequestBody dto: BlogPostDto): ResponseEntity<BlogPostDto> {
+        dto.id = UUID.randomUUID().toString()
         val post = DtoConverter.convertToEntity(dto)
+        post.createdAt = LocalDateTime.now()
         val savedPost = blogPostService.savePost(post)
         return ResponseEntity.ok(DtoConverter.convertToDto(savedPost))
     }

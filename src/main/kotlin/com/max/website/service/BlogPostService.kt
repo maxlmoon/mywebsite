@@ -22,7 +22,7 @@ class BlogPostService(private val blogPostRepository: BlogPostRepository) {
             content = dto.content,
             author = dto.author,
             // Only set ID and createdAt if non-null, otherwise let the database handle it
-            id = dto.id,
+            id = dto.id!!,
             createdAt = dto.createdAt
         )
     }

@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 
 data class BlogPostDto(
-    val id: String,
+    var id: String? = null,
     val title: String,
     val content: String,
     val author: String,
