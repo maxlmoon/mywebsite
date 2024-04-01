@@ -26,8 +26,6 @@ repositories {
 }
 
 dependencies {
-	implementation ("org.springdoc:springdoc-openapi-ui:1.5.9")
-
 	// https://mvnrepository.com/
 
 	implementation ("io.jsonwebtoken:jjwt-api:0.11.5")

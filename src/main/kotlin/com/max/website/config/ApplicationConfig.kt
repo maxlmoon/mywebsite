@@ -10,19 +10,18 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import java.util.function.Supplier
 
 @Configuration
-class WebSecurityConfig(private val userRepository: UserRepository) {
+class ApplicationConfig(private val userRepository: UserRepository) {
     @Bean
     fun userDetailsService(): UserDetailsService {
         return UserDetailsService { username: String? ->
             userRepository.findByEmail(username)
-                ?.orElseThrow(Supplier {
+                ?.orElseThrow {
                     UsernameNotFoundException(
                         "User not found"
                     )
-                }) ?: throw UsernameNotFoundException("User not found")
+                } ?: throw UsernameNotFoundException("User not found")
         }
     }
 

@@ -10,21 +10,22 @@ import jakarta.persistence.GeneratedValue
 
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
+import kotlin.collections.HashSet
 
 @Entity
 @Table(name = "users")
-data class User (
+data class User(
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @Column(name = "id", updatable = false, nullable = false)
     val id: UUID = UUID.randomUUID(),
 
-    @Column(nullable = false, unique = true)
-    var username: String? = null,
+    @Column(nullable = false)
+    var fullName: String? = null,
 
     @Column(nullable = false)
-    var password: String? = null,
+    var userPassword: String,
 
     @Column(nullable = false, unique = true)
     var email: String? = null,
@@ -38,11 +39,11 @@ data class User (
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private var updatedAt: Date? = null
+    private var updatedAt: Date? = null,
 
-) : UserDetails {
+    ) : UserDetails {
 
-   /*   The method "getAuthorities()" returns the user's roles list; it is helpful to manage permissions.
+    /*   The method "getAuthorities()" returns the user's roles list; it is helpful to manage permissions.
 
         We return an empty list because we will not cover role-based access control.
 
@@ -61,8 +62,9 @@ data class User (
     }
 
     override fun getPassword(): String {
-        return password!!
+        return this.userPassword
     }
+
 
     override fun getUsername(): String {
         return email!!
@@ -95,8 +97,7 @@ data class User (
 
     override fun hashCode(): Int = javaClass.hashCode()
 
-    @Override
     override fun toString(): String {
-        return this::class.simpleName + "(id = $id , username = $username , email = $email)"
+        return this::class.simpleName + "(id = $id , username = $fullName , email = $email)"
     }
 }

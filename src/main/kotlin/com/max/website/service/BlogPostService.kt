@@ -3,7 +3,9 @@ package com.max.website.service
 import com.max.website.dto.BlogPostDto
 import com.max.website.model.BlogPost
 import com.max.website.repository.BlogPostRepository
+import jakarta.validation.Valid
 import org.springframework.stereotype.Service
+
 
 @Service
 class BlogPostService(private val blogPostRepository: BlogPostRepository) {
