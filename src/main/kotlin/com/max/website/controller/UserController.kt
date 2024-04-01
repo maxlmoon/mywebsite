@@ -3,30 +3,28 @@ package com.max.website.controller
 import com.max.website.model.User
 import com.max.website.service.UserService
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
-import java.util.*
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 
-@RestController
 @RequestMapping("/users")
+@RestController
 class UserController(private val userService: UserService) {
+    @GetMapping("/me")
+    fun authenticatedUser(): ResponseEntity<User> {
+        val authentication = SecurityContextHolder.getContext().authentication
 
-    @GetMapping("/{id}")
-    fun getUserById(@PathVariable id: UUID): ResponseEntity<User> =
-        userService.findById(id)?.let {
-            ResponseEntity.ok(it)
-        } ?: ResponseEntity.notFound().build()
+        val currentUser = authentication.principal as User
 
-    @PostMapping
-    fun createUser(@RequestBody user: User): ResponseEntity<User> =
-        ResponseEntity.ok(userService.saveUser(user))
+        return ResponseEntity.ok(currentUser)
+    }
 
+    @GetMapping("/")
+    fun allUsers(): ResponseEntity<List<User?>> {
+        val users = userService.allUsers()
 
-    // TODO deleteUser, updateUser, listUser endpoints
-
-
-
+        return ResponseEntity.ok(users)
+    }
 }
-
-
-

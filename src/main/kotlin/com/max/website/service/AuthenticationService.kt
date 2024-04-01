@@ -17,7 +17,7 @@ class AuthenticationService(
     private val passwordEncoder: PasswordEncoder
 ) {
     fun signup(input: RegisterUserDto): User {
-        val user: User = User(
+        val user = User(
             fullName = input.fullName,
             email = input.email,
             userPassword = passwordEncoder.encode(input.password),

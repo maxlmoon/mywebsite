@@ -22,7 +22,7 @@ class AuthenticationController(
     fun register(@RequestBody registerUserDto: RegisterUserDto?): ResponseEntity<User> {
         val registeredUser: User = authenticationService.signup(registerUserDto!!)
 
-        return ResponseEntity.ok<User>(registeredUser)
+        return ResponseEntity.ok(registeredUser)
     }
 
     @PostMapping("/login")
@@ -33,6 +33,6 @@ class AuthenticationController(
 
         val loginResponse: LoginResponse = LoginResponse().setToken(jwtToken).setExpiresIn(jwtService.expirationTime)
 
-        return ResponseEntity.ok<LoginResponse>(loginResponse)
+        return ResponseEntity.ok(loginResponse)
     }
 }
