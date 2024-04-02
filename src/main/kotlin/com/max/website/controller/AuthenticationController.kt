@@ -7,11 +7,11 @@ import com.max.website.responses.LoginResponse
 import com.max.website.service.AuthenticationService
 import com.max.website.service.JwtService
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-
 @RequestMapping("/auth")
 @RestController
 class AuthenticationController(

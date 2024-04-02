@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.time.LocalDateTime
 import java.util.UUID
-
 @RestController
 @RequestMapping("/api/blogposts")
 class BlogPostController(private val blogPostService: BlogPostService) {
