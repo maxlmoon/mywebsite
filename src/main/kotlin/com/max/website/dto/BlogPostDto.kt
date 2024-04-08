@@ -8,7 +8,8 @@ data class BlogPostDto(
     val title: String,
     val content: String,
     val author: String,
-    val createdAt: LocalDateTime = LocalDateTime.now()
+    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val updatedAt: LocalDateTime = LocalDateTime.now()
 )
 
 
