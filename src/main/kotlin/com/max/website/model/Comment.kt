@@ -1,4 +1,4 @@
-Apackage com.max.website.model
+package com.max.website.model
 
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
@@ -30,5 +30,8 @@ data class Comment(
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    var updatedAt: Date? = null
+    var updatedAt: Date? = null,
+
+    @Column(nullable = false)
+    var likes: Int = 0
 )

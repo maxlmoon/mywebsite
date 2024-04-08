@@ -22,4 +22,13 @@ class CommentController(private val commentService: CommentService) {
         val comments = commentService.getCommentsByPostId(blogPostId)
         return ResponseEntity.ok(comments)
     }
+
+    @PostMapping("/{commentId}/like")
+    fun likeComment(@AuthenticationPrincipal user: User, @PathVariable commentId: Long,
+                    @PathVariable blogPostId: String
+    ): ResponseEntity<Void> {
+        commentService.likeComment(user.id, commentId)
+        return ResponseEntity.ok().build()
+    }
+
 }
