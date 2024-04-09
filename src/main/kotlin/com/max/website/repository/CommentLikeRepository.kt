@@ -6,4 +6,5 @@ import java.util.*
 
 interface CommentLikeRepository : JpaRepository<CommentLike, Long> {
     fun existsByUserIdAndCommentId(userId: UUID, commentId: Long): Boolean
+    fun deleteByCommentId(commentId: Long)
 }

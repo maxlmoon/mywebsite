@@ -32,6 +32,8 @@ data class Comment(
     @Column(name = "updated_at")
     var updatedAt: Date? = null,
 
-    @Column(nullable = false)
-    var likes: Int = 0
+    @OneToMany(mappedBy = "comment", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val likes: List<CommentLike> = mutableListOf(),
+
+
 )

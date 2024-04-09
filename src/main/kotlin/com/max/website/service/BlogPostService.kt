@@ -2,13 +2,21 @@ package com.max.website.service
 
 import com.max.website.dto.BlogPostDto
 import com.max.website.model.BlogPost
+import com.max.website.model.BlogPostLike
+import com.max.website.model.User
+import com.max.website.repository.BlogPostLikeRepository
 import com.max.website.repository.BlogPostRepository
-import jakarta.validation.Valid
+import com.max.website.repository.UserRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 
 @Service
-class BlogPostService(private val blogPostRepository: BlogPostRepository) {
+class BlogPostService(
+    private val blogPostRepository: BlogPostRepository,
+    private val blogPostLikeRepository: BlogPostLikeRepository,
+    private val userRepository: UserRepository
+) {
 
     fun findAllPosts(): List<BlogPost> = blogPostRepository.findAll()
 
@@ -16,28 +24,39 @@ class BlogPostService(private val blogPostRepository: BlogPostRepository) {
 
     fun findPostById(id: String): BlogPost? = blogPostRepository.findById(id).orElse(null)
 
-    fun deletePostById(id: String) = blogPostRepository.deleteById(id)
+    fun deletePostById(user: User, id: String) {
+        val blogPost = blogPostRepository.findById(id).orElseThrow {
+            Exception("Blog post not found")
+        }
 
-    fun convertToEntity(dto: BlogPostDto): BlogPost {
-        return BlogPost(
-            title = dto.title,
-            content = dto.content,
-            author = dto.author,
-            // Only set ID and createdAt if non-null, otherwise let the database handle it
-            id = dto.id!!,
-            createdAt = dto.createdAt
-        )
+        // Check if the current user is the creator of the blog post
+        if (blogPost.author != user.email) { // Assuming 'author' is a String matching the user's email. Adjust as needed.
+            throw Exception("Only the creator can delete this blog post")
+        }
+
+        // Proceed with deletion if the user is authorized
+        blogPostRepository.deleteById(id)
     }
 
-    fun convertToDto(entity: BlogPost): BlogPostDto {
-        return BlogPostDto(
-            id = entity.id,
-            title = entity.title,
-            content = entity.content,
-            author = entity.author,
-            createdAt = entity.createdAt
-        )
+
+    fun likeBlogPost(userId: UUID, blogPostId: String) {
+        // Check if the like already exists to prevent duplicate likes
+        if (blogPostLikeRepository.existsByUserIdAndBlogPostId(userId, blogPostId)) {
+            throw Exception("User has already liked this blog post")
+        }
+
+        val user = userRepository.findById(userId).orElse(null)
+            ?: throw Exception("User not found")
+        val blogPost = blogPostRepository.findById(blogPostId).orElse(null)
+            ?: throw Exception("Blog post not found")
+
+        val blogPostLike = BlogPostLike(user = user, blogPost = blogPost)
+        blogPostLikeRepository.save(blogPostLike)
     }
+
+
+
+
 
 
 }

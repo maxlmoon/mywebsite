@@ -3,8 +3,10 @@ package com.max.website.model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "comment_likes")
-class CommentLike(
+@Table(name = "blog_post_likes", uniqueConstraints = [
+    UniqueConstraint(columnNames = ["user_id", "blog_post_id"])
+])
+class BlogPostLike(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -14,8 +16,6 @@ class CommentLike(
     val user: User,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "comment_id", nullable = false)
-    val comment: Comment
-) {
-    // No need for a likes list here
-}
+    @JoinColumn(name = "blog_post_id", nullable = false)
+    val blogPost: BlogPost
+)
