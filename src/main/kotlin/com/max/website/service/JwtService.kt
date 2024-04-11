@@ -72,7 +72,7 @@ class JwtService {
             .setSigningKey(signInKey)
             .build()
             .parseClaimsJws(token)
-            .getBody()
+            .body
     }
 
     private val signInKey: Key
