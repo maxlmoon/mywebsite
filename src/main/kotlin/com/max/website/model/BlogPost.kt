@@ -22,13 +22,17 @@ data class BlogPost(
     @Column(nullable = false, length = 10000)
     var content: String,
 
-    @Column(nullable = false)
-    var author: String,
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    var author: User,
+
 
     @Column(nullable = false)
     var createdAt: LocalDateTime = LocalDateTime.now(),
 
-    @UpdateTimestamp
-    @Column(name = "updated_at")
-    var updatedAt: Date? = null
+    @Column(nullable = false)
+    var updatedAt: LocalDateTime = LocalDateTime.now(),
+
+    @OneToMany(mappedBy = "blogPost", cascade = [CascadeType.ALL], orphanRemoval = true)
+    val likes: List<BlogPostLike> = mutableListOf()
 )

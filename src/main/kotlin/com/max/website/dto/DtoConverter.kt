@@ -2,15 +2,17 @@ package com.max.website.dto
 
 
 import com.max.website.model.BlogPost
+import com.max.website.model.User
+import java.util.*
 
 object DtoConverter {
 
-    fun convertToEntity(dto: BlogPostDto): BlogPost {
+    fun convertToEntity(dto: BlogPostDto, author: User): BlogPost {
         return BlogPost(
-            id = dto.id!!,
+            id = dto.id ?: UUID.randomUUID().toString(), // Generate new UUID if null
             title = dto.title,
             content = dto.content,
-            author = dto.author,
+            author = author, // Directly use the User entity
             createdAt = dto.createdAt
         )
     }
@@ -20,8 +22,10 @@ object DtoConverter {
             id = entity.id,
             title = entity.title,
             content = entity.content,
-            author = entity.author,
-            createdAt = entity.createdAt
+            authorId = entity.author.id, // Get the author's ID from the User entity
+            authorName = entity.author.fullName ?: "", // Get the author's full name, handle nulls appropriately
+            createdAt = entity.createdAt,
+            updatedAt = entity.updatedAt
         )
     }
 }

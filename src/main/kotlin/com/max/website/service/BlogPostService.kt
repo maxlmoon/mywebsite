@@ -18,6 +18,12 @@ class BlogPostService(
     private val userRepository: UserRepository
 ) {
 
+    fun findPostsByUserId(userId: UUID): List<BlogPost>? {
+        val user = userRepository.findById(userId).orElseThrow { Exception("User not found") }
+        return user?.let { blogPostRepository.findByAuthor(it) }
+    }
+
+
     fun findAllPosts(): List<BlogPost> = blogPostRepository.findAll()
 
     fun savePost(post: BlogPost): BlogPost = blogPostRepository.save(post)
@@ -30,7 +36,8 @@ class BlogPostService(
         }
 
         // Check if the current user is the creator of the blog post
-        if (blogPost.author != user.email) { // Assuming 'author' is a String matching the user's email. Adjust as needed.
+        // Compare using UUIDs
+        if (blogPost.author.id != user.id) {
             throw Exception("Only the creator can delete this blog post")
         }
 

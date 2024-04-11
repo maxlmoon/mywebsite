@@ -10,6 +10,7 @@ import java.util.*
 class UserService(private val userRepository: UserRepository) {
     fun allUsers(): List<User?> = userRepository.findAll().toList()
     fun findById(id: UUID): User? = userRepository.findById(id).orElse(null)
+    fun findUserById(id: UUID): User? = userRepository.findById(id).orElse(null)
 
 
 }
