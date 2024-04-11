@@ -43,6 +43,7 @@ class SecurityConfiguration(
                     .requestMatchers(HttpMethod.POST, "/api/blogposts/*/comments/**").authenticated() // Only authenticated users can comment or like comments
                     .requestMatchers(HttpMethod.DELETE, "/api/blogposts/*/comments/**").authenticated()
                     //.requestMatchers(HttpMethod.DELETE, "/api/blogposts/**").hasAuthority("ROLE_ADMIN") // Uncomment when roles are implemented
+                    .requestMatchers(HttpMethod.GET, "/api/users/**").permitAll()
                     .anyRequest().authenticated()
             }
             .sessionManagement { session ->
