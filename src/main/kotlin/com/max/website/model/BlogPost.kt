@@ -19,10 +19,10 @@ data class BlogPost(
     @Column(nullable = false)
     var title: String,
 
-    @Column(nullable = false, length = 10000)
+    @Column(nullable = false, length = 100000)
     var content: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     var author: User,
 
@@ -33,6 +33,6 @@ data class BlogPost(
     @Column(nullable = false)
     var updatedAt: LocalDateTime = LocalDateTime.now(),
 
-    @OneToMany(mappedBy = "blogPost", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "blogPost", cascade = [CascadeType.ALL], orphanRemoval = true)
     val likes: List<BlogPostLike> = mutableListOf()
 )

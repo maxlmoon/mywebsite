@@ -1,6 +1,5 @@
 package com.max.website.service
 
-import com.max.website.dto.BlogPostDto
 import com.max.website.model.BlogPost
 import com.max.website.model.BlogPostLike
 import com.max.website.model.User
@@ -21,6 +20,10 @@ class BlogPostService(
     fun findPostsByUserId(userId: UUID): List<BlogPost>? {
         val user = userRepository.findById(userId).orElseThrow { Exception("User not found") }
         return user?.let { blogPostRepository.findByAuthor(it) }
+    }
+
+    fun findTopBlogPostsByLikes(): List<BlogPost?>? {
+        return blogPostRepository.findBlogPostsOrderedByLikes()
     }
 
 

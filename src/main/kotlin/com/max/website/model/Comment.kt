@@ -17,11 +17,11 @@ data class Comment(
     @Column(nullable = false)
     val text: String,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "blog_post_id", nullable = false)
     val blogPost: BlogPost,
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     val user: User,
 

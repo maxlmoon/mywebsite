@@ -1,14 +1,19 @@
 package com.max.website.controller
 
 import com.max.website.dto.BlogPostDto
-import com.max.website.service.BlogPostService
 import com.max.website.dto.DtoConverter
+import com.max.website.model.BlogPost
 import com.max.website.model.User
+import com.max.website.service.BlogPostService
 import com.max.website.service.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
+import java.util.*
+import java.util.function.Function
+import java.util.stream.Collectors
+
+
 @RestController
 @RequestMapping("/api/blogposts")
 class BlogPostController(
@@ -71,6 +76,16 @@ class BlogPostController(
             DtoConverter.convertToDto(post)
         }
         return ResponseEntity.ok(posts)
+    }
+
+    @GetMapping("/top-liked")
+    fun getTopLikedPosts(): ResponseEntity<List<BlogPostDto>> {
+        val posts = blogPostService.findTopBlogPostsByLikes()
+        // Use mapNotNull to ignore null values and ensure no nulls are in the resulting list
+        val dtos = posts?.mapNotNull { post ->
+            post?.let { DtoConverter.convertToDto(it) }
+        } ?: emptyList() // Handle null posts by returning an empty list
+        return ResponseEntity.ok(dtos)
     }
 
 }
