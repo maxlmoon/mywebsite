@@ -1,5 +1,6 @@
 package com.max.website.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -13,15 +14,15 @@ data class Comment(
     @SequenceGenerator(name = "comments_gen", sequenceName = "comments_seq", allocationSize = 1)
     val id: Long = 0,
 
-
     @Column(nullable = false)
     val text: String,
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_post_id", nullable = false)
+    @JsonIgnore
     val blogPost: BlogPost,
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     val user: User,
 
@@ -30,10 +31,9 @@ data class Comment(
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    var updatedAt: Date? = null,
+    var updatedAt: LocalDateTime? = null,
 
     @OneToMany(mappedBy = "comment", cascade = [CascadeType.ALL], orphanRemoval = true)
-    val likes: List<CommentLike> = mutableListOf(),
-
-
+val likes: List<CommentLike> = mutableListOf(),
 )
+
